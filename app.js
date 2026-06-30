@@ -1,10 +1,9 @@
-// ฟังก์ชันสากลตรวจหาตำแหน่งโดเมนของเซิร์ฟเวอร์แบบ Dynamic อัตโนมัติ (ขึ้น Render แล้วจะเปลี่ยนลิงก์ตามเองเลย)
 const BACKEND_URL = window.location.origin;
 
 const loginBtn = document.getElementById('loginBtn');
 if (loginBtn) {
     loginBtn.addEventListener('click', () => {
-        // ดึงค่าไคลเอนต์ไอดีมาสลับไปหน้าระบบลงสิทธิ์ของดิสคอร์ด
+        // 🟢 เปลี่ยนมาใช้เลขไคลเอนต์ไอดี 1521351927772741764 ของน้าเรียบร้อยครับ
         const client_id = "1521351927772741764"; 
         const redirect_uri = encodeURIComponent(`${BACKEND_URL}/api/callback`);
         window.location.href = `https://discord.com/oauth2/authorize?client_id=${client_id}&response_type=code&redirect_uri=${redirect_uri}&scope=identify+guilds`;
