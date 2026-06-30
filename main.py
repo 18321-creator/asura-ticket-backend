@@ -18,7 +18,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 app = Flask(__name__, static_folder='.')
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-# 🟢 บรรทัดนี้เชื่อมตัวแปรจริงจากดิสคอร์ดของน้าเรียบร้อยครับ
+# 🟢 คีย์ของบอทน้า
 DISCORD_CLIENT_ID = "1521351927772741764"
 DISCORD_CLIENT_SECRET = "BPhPZXLLNVcpeknQtSJXyqnAKVgkjrk6"
 
@@ -67,8 +67,8 @@ def discord_callback():
     if not code:
         return "Missing Authorization Code", 400
     
-    current_host = request.host_url.rstrip('/')
-    redirect_uri = f"{current_host}/api/callback"
+    # 🎯 🛠️ บรรทัดนี้บังคับให้เป็น https:// ตามมาตรฐานของ Render เพื่อป้องกันปัญหาพอร์ตชนกันครับน้า
+    redirect_uri = "https://pun-ticket.onrender.com/api/callback"
 
     data = {
         'client_id': DISCORD_CLIENT_ID,
@@ -86,7 +86,7 @@ def discord_callback():
     token_data = r.json()
     access_token = token_data.get('access_token')
     
-    return redirect(f"{current_host}/dashboard.html?token={access_token}")
+    return redirect(f"https://pun-ticket.onrender.com/dashboard.html?token={access_token}")
 
 @app.route('/api/user-profile', methods=['GET'])
 def get_user_profile():
