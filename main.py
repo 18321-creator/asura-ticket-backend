@@ -18,6 +18,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 app = Flask(__name__, static_folder='.')
 CORS(app, resources={r"/*": {"origins": "*"}})
 
+# 🟢 บรรทัดนี้เชื่อมตัวแปรจริงจากดิสคอร์ดของน้าเรียบร้อยครับ
 DISCORD_CLIENT_ID = "1521351927772741764"
 DISCORD_CLIENT_SECRET = "BPhPZXLLNVcpeknQtSJXyqnAKVgkjrk6"
 
@@ -44,7 +45,6 @@ def verify_user_discord_token(auth_header):
         return res.json()
     return None
 
-# เสิร์ฟหน้าเว็บแดชบอร์ดโดยตรงจากพอร์ตเดียวของ Render
 @app.route('/')
 def index():
     return send_from_directory('.', 'index.html')
@@ -67,7 +67,6 @@ def discord_callback():
     if not code:
         return "Missing Authorization Code", 400
     
-    # ดักจับจับคู่ Hostname อัตโนมัติ เพื่อรองรับ URL สลับสายไฟของ Render โดยเฉพาะ
     current_host = request.host_url.rstrip('/')
     redirect_uri = f"{current_host}/api/callback"
 
@@ -232,7 +231,6 @@ class CloseReasonModal(Modal):
         await interaction.channel.delete()
 
 def run_flask(): 
-    # ใช้พอร์ต 10000 สากลของ Render ตัวบริการหลัก
     app.run(host='0.0.0.0', port=10000, threaded=True)
 
 @bot.event
@@ -245,5 +243,3 @@ if __name__ == "__main__":
     threading.Thread(target=run_flask, daemon=True).start()
     if BOT_TOKEN:
         bot.run(BOT_TOKEN)
-    else:
-        print("❌ ไม่พบตัวแปร BOT_TOKEN ในระบบ Environment")
